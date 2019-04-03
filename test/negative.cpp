@@ -24,6 +24,6 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::cerr << "You should input the image file path in the command line." << std::endl;
+        std::cerr << "usage: ./negative [input_path] [output_path]" << std::endl;
     }
 }

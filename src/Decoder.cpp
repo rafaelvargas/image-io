@@ -4,9 +4,9 @@
 
 #include "../include/Decoder.hpp"
 
-std::vector<std::vector<std::vector<int>>> Decoder::extractPixelMap(std::ifstream &image_file, const std::string extension)
+std::unique_ptr<std::vector<std::vector<std::vector<int>>>> Decoder::extractPixelMap(std::ifstream &image_file, const std::string extension)
 {
-    std::vector<std::vector<std::vector<int>>> pixelmap;
+    std::unique_ptr<std::vector<std::vector<std::vector<int>>>> pixelmap = std::make_unique<std::vector<std::vector<std::vector<int>>>>();
 
     if (extension == "bmp")
     {
@@ -38,7 +38,7 @@ std::vector<std::vector<std::vector<int>>> Decoder::extractPixelMap(std::ifstrea
                 }
                 line.push_back(pixel_channels);
             }
-            pixelmap.insert(pixelmap.begin(), line);
+            pixelmap->insert(pixelmap->begin(), line);
         }
     }
     else

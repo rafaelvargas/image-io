@@ -20,8 +20,8 @@ void Image::read(const std::string filepath)
         std::string file_extension = filepath.substr(filepath.find_last_of(".") + 1);
         this->pixelmap = decoder.extractPixelMap(input_file, file_extension);
         input_file.close();
-        this->height = this->pixelmap.size();
-        this->width = this->pixelmap[0].size();
+        this->height = this->pixelmap->size();
+        this->width = this->pixelmap->at(0).size();
     }
     else
     {
@@ -57,5 +57,5 @@ int Image::getHeight()
 
 std::vector<std::vector<int>> &Image::operator[](const int row_index)
 {
-    return this->pixelmap[row_index];
+    return this->pixelmap->at(row_index);
 }

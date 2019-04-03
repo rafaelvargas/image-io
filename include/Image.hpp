@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 class Image
 {
@@ -15,5 +16,5 @@ public:
 
 private:
   int height, width;
-  std::vector<std::vector<std::vector<int>>> pixelmap;
+  std::unique_ptr<std::vector<std::vector<std::vector<int>>>> pixelmap;
 };
