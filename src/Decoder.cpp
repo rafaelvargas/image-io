@@ -43,13 +43,27 @@ std::unique_ptr<std::vector<std::vector<std::vector<int>>>> Decoder::extractPixe
     }
     else if (extension == "ppm")
     {
+        std::vector<std::string> info;
+        std::string buffer;
+
+        // Reads all metadata, excluding comments
+        while (info.size() < 3)
+        {
+            std::getline(image_file, buffer);
+            if (buffer[0] != '#')
+            {
+                info.push_back(buffer);
+            }
+        }
+
         std::string format;
         int width, height, max_value;
-        
-        image_file >> format;
-        image_file >> width;
-        image_file >> height;
-        image_file >> max_value;
+
+        // Converts metadata to the corresponding types
+        format = info[0];
+        width = std::stoi(info[1].substr(0, info[1].find_first_of(' ')));
+        height = std::stoi(info[1].substr(info[1].find_first_of(' ') + 1));
+        max_value = std::stoi(info[2]);
 
         for (int i = 0; i < height; i++)
         {
