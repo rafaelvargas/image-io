@@ -41,6 +41,33 @@ std::unique_ptr<std::vector<std::vector<std::vector<int>>>> Decoder::extractPixe
             pixelmap->insert(pixelmap->begin(), line);
         }
     }
+    else if (extension == "ppm")
+    {
+        std::string format;
+        int width, height, max_value;
+        
+        image_file >> format;
+        image_file >> width;
+        image_file >> height;
+        image_file >> max_value;
+
+        for (int i = 0; i < height; i++)
+        {
+            std::vector<std::vector<int>> line;
+            for (int j = 0; j < width; j++)
+            {
+                std::vector<int> pixel_channels;
+                for (int k = 0; k < 3; k++)
+                {
+                    int pixel_channel;
+                    image_file >> pixel_channel;
+                    pixel_channels.push_back(pixel_channel);
+                }
+                line.push_back(pixel_channels);
+            }
+            pixelmap->push_back(line);
+        }
+    }
     else
     {
         throw std::runtime_error("[Reading] Unsupported image type.");
