@@ -11,6 +11,14 @@ Image::Image(const std::string filepath)
     this->read(filepath);
 }
 
+Image::Image(const int height, const int width)
+{
+    std::vector<std::vector<std::vector<int>>> pixelmap(std::vector<std::vector<std::vector<int>>>(height, std::vector<std::vector<int>>(width, std::vector<int>(3, 0))));
+    this->pixelmap = std::make_unique<std::vector<std::vector<std::vector<int>>>>(pixelmap);
+    this->height = height;
+    this->width = width; 
+}
+
 void Image::read(const std::string filepath)
 {
     std::ifstream input_file(filepath, std::ios::binary);

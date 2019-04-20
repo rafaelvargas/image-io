@@ -46,7 +46,6 @@ void Encoder::dumpPixelMap(Image &image, std::ofstream &image_file, const std::s
         image_file.write(reinterpret_cast<char *>(&num_colors), sizeof(num_colors));
         image_file.write(reinterpret_cast<char *>(&important_colors), sizeof(important_colors));
 
-        uint8_t channel = 255;
         for (int i = height - 1; i >= 0; i--)
         {
             for (int j = 0; j < width; j++)

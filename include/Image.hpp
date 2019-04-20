@@ -8,6 +8,7 @@ class Image
 {
 public:
   Image(const std::string filepath);
+  Image(const int height, const int width);
   void read(const std::string filepath);
   void write(const std::string filepath);
   int getWidth();
