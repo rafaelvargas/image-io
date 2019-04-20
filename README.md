@@ -37,3 +37,4 @@ make
 
 ## Supported image file formats
 * BMP (Bitmap)
+* PPM (Portable Pixmap)
