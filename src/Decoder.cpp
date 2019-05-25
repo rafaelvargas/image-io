@@ -41,6 +41,75 @@ std::unique_ptr<std::vector<std::vector<std::vector<int>>>> Decoder::extractPixe
             pixelmap->insert(pixelmap->begin(), line);
         }
     }
+    else if (extension == "ppm")
+    {
+        std::vector<std::string> info;
+        std::string buffer;
+
+        // Reads all metadata, excluding comments
+        while (info.size() < 3)
+        {
+            std::getline(image_file, buffer);
+            if (buffer[0] != '#')
+            {
+                info.push_back(buffer);
+            }
+        }
+
+        std::string format;
+        int width, height, max_value;
+
+        // Converts metadata to the corresponding types
+        format = info[0];
+        width = std::stoi(info[1].substr(0, info[1].find_first_of(' ')));
+        height = std::stoi(info[1].substr(info[1].find_first_of(' ') + 1));
+        max_value = std::stoi(info[2]);
+
+        if (format == "P3")
+        {
+            // Plain text pixelmap data case
+            for (int i = 0; i < height; i++)
+            {
+                std::vector<std::vector<int>> line;
+                for (int j = 0; j < width; j++)
+                {
+                    std::vector<int> pixel_channels;
+                    for (int k = 0; k < 3; k++)
+                    {
+                        int pixel_channel;
+                        image_file >> pixel_channel;
+                        pixel_channels.push_back(pixel_channel);
+                    }
+                    line.push_back(pixel_channels);
+                }
+                pixelmap->push_back(line);
+            }
+        }
+        else if (format == "P6")
+        {
+            // Binary pixelmap data case
+            for (int i = 0; i < height; i++)
+            {
+                std::vector<std::vector<int>> line;
+                for (int j = 0; j < width; j++)
+                {
+                    std::vector<int> pixel_channels;
+                    for (int k = 0; k < 3; k++)
+                    {
+                        uint8_t pixel_channel;
+                        image_file.read(reinterpret_cast<char *>(&pixel_channel), sizeof(pixel_channel));
+                        pixel_channels.push_back(pixel_channel);
+                    }
+                    line.push_back(pixel_channels);
+                }
+                pixelmap->push_back(line);
+            }
+        }
+        else
+        {
+            throw std::runtime_error("[Reading] Unsupported PPM format.");
+        }
+    }
     else
     {
         throw std::runtime_error("[Reading] Unsupported image type.");

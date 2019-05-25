@@ -56,6 +56,19 @@ void Encoder::dumpPixelMap(Image &image, std::ofstream &image_file, const std::s
                 }
             }
         }
+    } else if(extension == "ppm")
+    {
+        image_file << "P3" << std::endl;
+        image_file << image.getWidth() << " " << image.getHeight() << std::endl;
+        image_file << 255 << std::endl;
+        
+        for (int i = 0; i < image.getHeight(); i++)
+        {
+            for (int j = 0; j < image.getWidth(); j++)
+            {
+                image_file << image[i][j][0] << " " << image[i][j][1] << " " << image[i][j][2] << std::endl;
+            }
+        }
     }
     else
     {

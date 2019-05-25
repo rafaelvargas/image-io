@@ -7,9 +7,9 @@ A simple library for reading and writing images.
 * The header _Image.hpp_ should be included in your source code.
 
 ### Image Reading
-A image is created from an input file.
+A image is created from an input file. The extension needs to be specified.
 ```cpp
-Image image("input_filename.extension");
+Image image("input_filename");
 ```
 ### Image Creation
 A image with all values set to zero is created.
@@ -22,7 +22,6 @@ A image is stored as a file in a specific format. The extension needs to be spec
 ```cpp
 image.write("output_filename");
 ```
-
 
 ## Running tests
 Some tests are in the _test_ folder. To compile them, the following commands are suggested:
@@ -37,3 +36,4 @@ make
 
 ## Supported image file formats
 * BMP (Bitmap)
+* PPM (Portable Pixmap)
